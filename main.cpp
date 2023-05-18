@@ -39,8 +39,10 @@ int main() {
             PROCESS_MEMORY_COUNTERS pmc;
             if (GetProcessMemoryInfo(process, (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc))) {
                 DWORD fps = 0;
-                DWORD_PTR baseAddr = (DWORD_PTR)module;
-                DWORD frameCountAddr = baseAddr + unityplayer.dll+1C4E000; // Should be the actual address.
+                DWORD_PTR baseAddr = (DWORD_PTR)module[0];
+                DWORD_PTR unityplayerAddr = 0x1C4E000; // Should be the actual address.
+
+                DWORD frameCountAddr = baseAddr + unityplayerAddr;
 
                 ReadProcessMemory(process, (LPCVOID)frameCountAddr, &fps, sizeof(fps), NULL);
 
